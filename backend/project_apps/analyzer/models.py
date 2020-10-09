@@ -6,7 +6,7 @@ from django.db import models
 # Analyzer 类
 class Analyzer(models.Model):
     gender_choices = (('男', '男'), ('女', '女'))
-    sno = models.ImageField(db_column="SNo", primary_key=True, null=False) # 学号不能为空
+    sno = models.IntegerField(db_column="SNo", primary_key=True, null=False) # 学号不能为空
     name = models.CharField(db_column="SName", max_length=100, null=False) # 姓名不能为空
     gender = models.CharField(db_column="Gender", max_length=100, choices=gender_choices) # 性别
     birthday = models.DateField(db_column="Birthday",null=False) #生日
@@ -18,7 +18,7 @@ class Analyzer(models.Model):
 
     class Meta:
         managed = True
-        db_table = "Analyzer"
+        db_table = "analyzer"
 
     def __str__(self):
         return "学号：%s\t姓名：%s\t性别：%s"%(self.sno, self.name,self.gender)
