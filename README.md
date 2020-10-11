@@ -58,3 +58,25 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'project_apps'))
        ?	 146行的decode修改为encode 
   
   + 执行 python manage.py migrate 
+
+
+
+##  跨域问题解决
+
++ 后端
+
+  1. 安装 pip install django-cors-headers
+
+  2. 注册到 setting 的 INSTALL_APPS　中
+
+  3. 添加到 setting 的 MIDDLEWARE 中
+
+     corsheaders.middleware.CorsMiddleware, 需要放在csrf的前面
+
+  4. 添加允许访问的白名单,凡是出现在白名单中的域名都可以访问后端接口
+
+     CORS_ORIGIN_WHITELIST = ('http://192.168.182.1:8080')或:CORS_ORIGN_ALLOW_ALL = TRUE
+
+     可以添加:CORS_ALLOW_CREDENTIALS = True指明在跨域访问中,后端是否支持对cookie的操作
+
+     
