@@ -1,9 +1,35 @@
-#app {
-    height: 200px;
-    width: 400px;
-    background-color: rgb(139, 0, 104);
-    text-align: center;
-    line-height: 100px;
-    font-size: 40px;
-    margin: 100px auto;
+/* 消除 8px 的默认距离 */
+html,body,#app,.el-container{
+    margin: 0;
+    padding: 0;
+    height: 100%;
 }
+.el-header{
+    background-color: #B3C0D1;
+    color: #333;
+    text-align: left;
+    line-height: 80px;
+    font-size: 28px;
+  }
+  .el-footer {
+    background-color: #B3C0D1;
+    color: #333;
+    text-align: center;
+    line-height: 20px;
+    font-size: 10px;
+    font-weight: 700px;
+  }
+  
+  .el-aside {
+    background-color: #D3DCE6;
+    color: #333;
+    text-align: center;
+    line-height: 200px;
+  }
+  
+  .el-main {
+    background-color: #E9EEF3;
+    color: #333;
+    text-align: left;
+    /* line-height: 160px; */
+  }
