@@ -1,0 +1,9 @@
+#app {
+    height: 200px;
+    width: 400px;
+    background-color: rgb(139, 0, 104);
+    text-align: center;
+    line-height: 100px;
+    font-size: 40px;
+    margin: 100px auto;
+}
