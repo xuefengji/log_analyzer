@@ -3,14 +3,27 @@ const app = new Vue({
     data() {
         return {
             msg: 'hello,world',
-            student:[
-                {sno: 95004, name:"张丽",gender:"女",birthday:"1992-09-09",mobile:"13587678908",email:"1354256@qq.com",address:"江苏省无锡市滨湖区",image:""},
-                {sno: 95004, name:"张丽",gender:"女",birthday:"1992-09-09",mobile:"13587678908",email:"1354256@qq.com",address:"江苏省无锡市滨湖区",image:""},
-                {sno: 95004, name:"张丽",gender:"女",birthday:"1992-09-09",mobile:"13587678908",email:"1354256@qq.com",address:"江苏省无锡市滨湖区",image:""},
-            ],
+            student:[],
+            baseUrl: 'http://127.0.0.1:8000/',
             currentpage:1,
             pagesize:10,
-            total:100
+            total:100,
+            
+        }
+    },
+    mounted() {
+        this.getStudents()
+    },
+    methods: {
+        getStudents: function(){
+            axios
+            .get(this.baseUrl + 'students/')
+            .then(function(res){
+                console.log(res)
+            })
+            .catch(function(err){
+                console.log(err)
+            })
         }
     },
 })
