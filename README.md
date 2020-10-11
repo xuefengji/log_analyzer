@@ -79,4 +79,8 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'project_apps'))
 
      可以添加:CORS_ALLOW_CREDENTIALS = True指明在跨域访问中,后端是否支持对cookie的操作
 
-     
+
+
+## 前端使用 axios 的坑
+
++ 使指向 vue 实例的 this 变成 undefined
