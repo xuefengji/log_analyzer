@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # my apps
     'project_apps.analyzer',
     # 'analyzer',
+    'corsheaders',
 
 ]
 
@@ -48,10 +49,12 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -132,3 +135,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# 添加cors策略
+# 1. 添加允许访问的域名
+CORS_ORIGIN_WHITELIST = ('http://127.0.0.1:5500',)
+# 2. cors 的cookies
+CORS_ALLOW_CREDENTIALS = True
