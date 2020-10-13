@@ -74,7 +74,7 @@
                                 </el-col>
                             </el-row>
                         </el-form>
-                        <el-table :data="students" style="width: 100%;" size="mini" border>
+                        <el-table :data="pageStudent" style="width: 100%;" size="mini" border>
                             <el-table-column type="selection">
                             </el-table-column>
                             <el-table-column type="index" label="序号" align="center" width="60">
@@ -105,8 +105,9 @@
                                 <el-button type="primary" icon="el-icon-delete">批量删除</el-button>
                             </el-col>
                             <el-col :span="20" style="text-align: right;">
-                                <el-pagination :current-page="currentpage" :page-sizes="[5, 10, 50, 100]"
-                                    :page-size="pagesize" layout="total, sizes, prev, pager, next, jumper" :total="total">
+                                <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
+                                    :current-page="currentPage" :page-sizes="[5, 10, 50, 100]" :page-size="pageSize"
+                                    layout="total, sizes, prev, pager, next, jumper" :total="total">
                                 </el-pagination>
                             </el-col>
                         </el-row>
