@@ -19,5 +19,6 @@ from project_apps.analyzer import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('students/',views.get_student)
+    path('students/',views.get_student) , #获取所有学生
+    path('students/query/', views.query_student) #获取符合条件的学生信息
 ]
