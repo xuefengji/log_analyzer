@@ -9,7 +9,14 @@ const app = new Vue({
             currentPage:1,
             pageSize:10,
             total:0,
-            inputstr: "" //获取输入框的值
+            inputstr: "", //获取输入框的值
+            dialogFormVisible: true,
+            formInline: {
+                user: '',
+                region: ''
+              },
+            formLabelWidth: '120px',
+            labelPosition: 'right',
             
         }
     },
