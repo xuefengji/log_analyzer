@@ -11,6 +11,9 @@ const app = new Vue({
             total:0,
             inputstr: "", //获取输入框的值
             dialogVisible: false,
+            isView: false,
+            isEdit: false,
+            dialogTitle: "",
             studentForm:{
                 sno: "",
                 name:"",
@@ -30,6 +33,15 @@ const app = new Vue({
     },
    
     methods: {
+        //修改学生信息
+        updateStudent(row){
+            this.dialogTitle = "修改学生信息";
+            this.dialogVisible = true;
+            this.isEdit = true;
+            this.isView = false;
+            this.studentForm = JSON.parse(JSON.stringify(row));
+
+        },
         //关闭弹窗
         closeDialogForm(){
             this.studentForm.sno = "";
@@ -44,7 +56,10 @@ const app = new Vue({
 
         //查看学生信息
         viewStudent(row){
+            this.dialogTitle = "查看学生信息";
             this.dialogVisible = true;
+            this.isView = true;
+            this.isEdit = false;
             //通过浅拷贝的方式赋值
             // this.studentForm = row;
             //深拷贝
@@ -53,6 +68,8 @@ const app = new Vue({
         //添加学生信息
         addStudent(){
             this.dialogVisible = true;
+            this.isEdit = false;
+            this.isView = false;
         },
         // 查询学生信息
         getQueryStudent(){
