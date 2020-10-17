@@ -30,10 +30,25 @@ const app = new Vue({
     },
    
     methods: {
+        //关闭弹窗
+        closeDialogForm(){
+            this.studentForm.sno = "";
+            this.studentForm.name = "";
+            this.studentForm.gender = "";
+            this.studentForm.birthday = "";
+            this.studentForm.mobile = "";
+            this.studentForm.email = "";
+            this.studentForm.address = "";
+            this.dialogVisible = false;
+        },
+
         //查看学生信息
         viewStudent(row){
             this.dialogVisible = true;
-            this.studentForm = row;
+            //通过浅拷贝的方式赋值
+            // this.studentForm = row;
+            //深拷贝
+            this.studentForm = JSON.parse(JSON.stringify(row));
         },
         //添加学生信息
         addStudent(){

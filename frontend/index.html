@@ -113,7 +113,7 @@
                                 </el-pagination>
                             </el-col>
                         </el-row>
-                        <el-dialog title="添加学生信息" :visible.sync="dialogVisible" width="50%">
+                        <el-dialog title="添加学生信息" :visible.sync="dialogVisible" width="50%" @close="closeDialogForm">
                             <el-form v-model="studentForm" :inline="true" style="margin-left: 10px;" label-width="100px"
                                 label-position="right" size="mini">
                                 <el-form-item label="学号：">
@@ -146,7 +146,7 @@
                             </el-form>
                             <span slot="footer" class="dialog-footer">
                                 <el-button type="primary" size="mini">确 定</el-button>
-                                <el-button type="info" size="mini">取 消
+                                <el-button type="info" size="mini" @click="closeDialogForm">取 消
                                 </el-button>
                             </span>
                         </el-dialog>
