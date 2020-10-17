@@ -10,13 +10,18 @@ const app = new Vue({
             pageSize:10,
             total:0,
             inputstr: "", //获取输入框的值
-            dialogFormVisible: true,
-            formInline: {
-                user: '',
-                region: ''
-              },
-            formLabelWidth: '120px',
-            labelPosition: 'right',
+            dialogVisible: false,
+            studentForm:{
+                sno: "",
+                name:"",
+                gender: "",
+                birthday: "",
+                mobile: "",
+                email: "",
+                address: "",
+                image: "",
+            },
+            
             
         }
     },
@@ -25,6 +30,15 @@ const app = new Vue({
     },
    
     methods: {
+        //查看学生信息
+        viewStudent(row){
+            this.dialogVisible = true;
+            this.studentForm = row;
+        },
+        //添加学生信息
+        addStudent(){
+            this.dialogVisible = true;
+        },
         // 查询学生信息
         getQueryStudent(){
             let that = this;
