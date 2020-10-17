@@ -24,7 +24,33 @@ const app = new Vue({
                 address: "",
                 image: "",
             },
-            
+            rules:{
+                sno:[
+                    {required: true, message: '学号不能为空',trigger: 'blur'},
+                    {pattern:/^[9][5]\d{3}$/, message: '学号必须以95开头的5位',trigger: 'blur'}
+                ],
+                name:[
+                    {required: true, message: '姓名不能为空',trigger: 'blur'},
+                    {pattern:/^[\u4e00-\u9fa5]{2,5}$/, message: '姓名必须是2-5个汉字',trigger: 'blur'}
+                ],
+                gender: [
+                    { required: true, message: '性别不能为空', trigger: 'change' },
+                ],
+                birthday: [
+                    {required: true, message: '出生日期不能为空', trigger: 'change' },
+                ],
+                mobile: [
+                    { required: true, message: '手机号码不能为空', triggler: 'blur' },
+                    { pattern: /^[1][35789]\d{9}$/, message: '手机号码必须要符合规范', trigger: 'blur' },
+                ],
+                email: [
+                    { required: true, message: '邮箱地址不能为空', trigger: 'blur' },
+                    { pattern: /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/, message: '邮箱地址必须要符合规范', trigger: 'blur' },
+                ],
+                address: [
+                    { required: true, message: '家庭住址不能为空', trigger: 'blur' },
+                ]
+            }
             
         }
     },

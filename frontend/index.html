@@ -114,33 +114,33 @@
                             </el-col>
                         </el-row>
                         <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="50%" @close="closeDialogForm">
-                            <el-form v-model="studentForm" :inline="true" style="margin-left: 10px;" label-width="100px"
+                            <el-form :model="studentForm" :rules="rules" :inline="true" style="margin-left: 10px;" label-width="100px"
                                 label-position="right" size="mini">
-                                <el-form-item label="学号：">
+                                <el-form-item label="学号：" prop="sno">
                                     <el-input v-model="studentForm.sno" :disabled="isView || isEdit" suffix-icon="el-icon-edit"></el-input>
                                 </el-form-item>
-                                <el-form-item label="姓名：">
+                                <el-form-item label="姓名：" prop="name">
                                     <el-input v-model="studentForm.name" :disabled="isView" suffix-icon="el-icon-edit">
                                     </el-input>
                                 </el-form-item>
-                                <el-form-item label="性别：">
+                                <el-form-item label="性别：" prop="gender">
                                     <el-select v-model="studentForm.gender" :disabled="isView" placeholder="请选择性别">
                                         <el-option value="男"></el-option>
                                         <el-option value="女"></el-option>
                                     </el-select>
                                 </el-form-item>
-                                <el-form-item label="出生日期：">
+                                <el-form-item label="出生日期：" prop="birthday">
                                     <el-date-picker v-model="studentForm.birthday" :disabled="isView" type="date" placeholder="选择日期" style="width:93% ">
                                     </el-date-picker>
                                 </el-form-item>
-                                <el-form-item  label="手机号码：">
+                                <el-form-item  label="手机号码：" prop="mobile">
                                     <el-input v-model="studentForm.mobile" :disabled="isView" suffix-icon="el-icon-edit"></el-input>
                                 </el-form-item>
-                                <el-form-item  label="邮箱地址：">
+                                <el-form-item  label="邮箱地址：" prop="email">
                                     <el-input v-model="studentForm.email" :disabled="isView" suffix-icon="el-icon-edit">
                                     </el-input>
                                 </el-form-item>
-                                <el-form-item  label="家庭住址：">
+                                <el-form-item  label="家庭住址：" prop="address">
                                     <el-input v-model="studentForm.address" :disabled="isView" suffix-icon="el-icon-edit" style="width:262%"></el-input>
                                 </el-form-item>
                             </el-form>
