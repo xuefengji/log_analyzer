@@ -1,6 +1,26 @@
 const app = new Vue({
     'el': '#app',
     data() {
+        // 自定义规则
+        const check_student = (rule,value,callback) => {
+            axios.post(this.baseUrl+'student/check/',{
+                sno: value
+            })
+            .then((res)=>{
+                if(res.data.code == 1){
+                    if(res.data.exists){
+                        callback(new Error('学号已存在！'));
+                    }else{
+                        callback();
+                    }
+                }else{
+                    callback(new Error('后端检查学生信息时出错'));
+                }
+            })
+            .catch((res)=>{
+                callback(new Error('后端检查学生信息时出错'));
+            })
+        };
         return {
             msg: 'hello,world',
             students:[],
@@ -27,7 +47,8 @@ const app = new Vue({
             rules:{
                 sno:[
                     {required: true, message: '学号不能为空',trigger: 'blur'},
-                    {pattern:/^[9][5]\d{3}$/, message: '学号必须以95开头的5位',trigger: 'blur'}
+                    {pattern:/^[9][5]\d{3}$/, message: '学号必须以95开头的5位',trigger: 'blur'},
+                    {validator: check_student, triggler:'blur'}
                 ],
                 name:[
                     {required: true, message: '姓名不能为空',trigger: 'blur'},
