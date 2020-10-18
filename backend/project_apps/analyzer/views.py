@@ -46,3 +46,17 @@ def check_student(request):
             return JsonResponse({'code':1,'exists':True})
     except Exception as e:
         return JsonResponse({'code': 0, 'msg': "检查学生信息出错"+str(e)})
+
+#添加学生
+def add_student(request):
+    data = JsonResponse(request.body.decode('utf-8'))
+    try:
+        #     添加学生信息
+        student_obj = Analyzer(sno=data['sno'],name=data['name'],birthday=data['birthday'],gender=data['gender'],
+                               mobile=data['mobile'],emial=data['email'],address=data['address'])
+        student_obj.save()
+        analyzer_object = Analyzer.objects.all().values()
+        analyzer = list(analyzer_object)
+        return JsonResponse({'code': 1, 'data': analyzer})
+    except Exception as e:
+        return JsonResponse({'code':0,'msg':'添加学生失败，具体原因'+str(e)})
