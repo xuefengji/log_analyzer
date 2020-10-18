@@ -48,7 +48,7 @@ const app = new Vue({
                 sno:[
                     {required: true, message: '学号不能为空',trigger: 'blur'},
                     {pattern:/^[9][5]\d{3}$/, message: '学号必须以95开头的5位',trigger: 'blur'},
-                    {validator: check_student, triggler:'blur'}
+                    {validator: check_student, trigger:'blur'}
                 ],
                 name:[
                     {required: true, message: '姓名不能为空',trigger: 'blur'},
@@ -61,7 +61,7 @@ const app = new Vue({
                     {required: true, message: '出生日期不能为空', trigger: 'change' },
                 ],
                 mobile: [
-                    { required: true, message: '手机号码不能为空', triggler: 'blur' },
+                    { required: true, message: '手机号码不能为空', trigger: 'blur' },
                     { pattern: /^[1][35789]\d{9}$/, message: '手机号码必须要符合规范', trigger: 'blur' },
                 ],
                 email: [
@@ -80,6 +80,17 @@ const app = new Vue({
     },
    
     methods: {
+        //校验表单提交信息(修改、添加)
+        submitStudentForm(formName) {
+            this.$refs[formName].validate((valid) => {
+              if (valid) {
+                alert('submit!');
+              } else {
+                console.log('error submit!!');
+                return false;
+              }
+            });
+          },
         //修改学生信息
         updateStudent(row){
             this.dialogTitle = "修改学生信息";
@@ -90,7 +101,9 @@ const app = new Vue({
 
         },
         //关闭弹窗
-        closeDialogForm(){
+        closeDialogForm(formName){
+            //重置表单
+            this.$refs[formName].resetFields();
             this.studentForm.sno = "";
             this.studentForm.name = "";
             this.studentForm.gender = "";
