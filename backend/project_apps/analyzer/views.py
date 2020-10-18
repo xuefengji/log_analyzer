@@ -53,7 +53,7 @@ def add_student(request):
     try:
         #     添加学生信息
         student_obj = Analyzer(sno=data['sno'],name=data['name'],birthday=data['birthday'],gender=data['gender'],
-                               mobile=data['mobile'],emial=data['email'],address=data['address'])
+                               mobile=data['mobile'],emial=data['email'],address=data['address'],image=data['image'])
         student_obj.save()
         analyzer_object = Analyzer.objects.all().values()
         analyzer = list(analyzer_object)
