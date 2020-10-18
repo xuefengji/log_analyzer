@@ -84,13 +84,32 @@ const app = new Vue({
         submitStudentForm(formName) {
             this.$refs[formName].validate((valid) => {
               if (valid) {
-                alert('submit!');
+                if(isEdit){
+                    this.updateSubmitStudent();
+                }else{
+                    this.addSubmitStudent();
+                }
               } else {
                 console.log('error submit!!');
                 return false;
               }
             });
           },
+          //添加学生到数据库
+        addSubmitStudent(){
+            let that = this;
+            axios.post(that.baseUrl+'student/add/',that.studentForm)
+            .then((res)=>{
+                if(res.code===1){
+                    console.log(res.data.data);
+                    that.students = res.data.data;
+                    that.total = res.data.data.length;
+                    that.$message.success('添加学生成功');
+                }else{
+                    that.$message.success('添加学生失败');
+                }
+            })
+        },
         //修改学生信息
         updateStudent(row){
             this.dialogTitle = "修改学生信息";
@@ -134,7 +153,6 @@ const app = new Vue({
         // 查询学生信息
         getQueryStudent(){
             let that = this;
-    
             axios
             .post(that.baseUrl + 'students/query/',{inputstr:that.inputstr})
             .then(function(res){

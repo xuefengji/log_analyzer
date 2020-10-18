@@ -135,7 +135,7 @@
                                     </el-select>
                                 </el-form-item>
                                 <el-form-item label="出生日期：" prop="birthday">
-                                    <el-date-picker v-model="studentForm.birthday" :disabled="isView" type="date"
+                                    <el-date-picker v-model="studentForm.birthday" value-format="yyyy-MM-dd" :disabled="isView" type="date"
                                         placeholder="选择日期" style="width:93% ">
                                     </el-date-picker>
                                 </el-form-item>
