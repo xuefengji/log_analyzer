@@ -3,6 +3,7 @@ const app = new Vue({
     data() {
         // 自定义规则
         const check_student = (rule,value,callback) => {
+            if(this.isEdit) callback();
             axios.post(this.baseUrl+'student/check/',{
                 sno: value
             })
@@ -87,7 +88,7 @@ const app = new Vue({
                 if(this.isEdit){
                     this.updateSubmitStudent();
                 }else{
-                    console.log(1);
+                    // console.log(1);
                     this.addSubmitStudent();
                 }
               } else {
@@ -107,6 +108,26 @@ const app = new Vue({
                     that.total = res.data.data.length;
                     that.getPageStudent();
                     that.$message.success('添加学生成功');
+                    that.closeDialogForm('studentForm');
+                }else{
+                    that.$message.error(res.data.msg);
+                }
+            })
+            .catch(err=>{
+                console.log(err)
+            })
+        },
+         //修改学生到数据库
+         updateSubmitStudent(){
+            let that = this;
+            axios.post(that.baseUrl+'student/update/',that.studentForm)
+            .then(res=>{
+                if(res.data.code === 1){
+                    console.log(res.data.data);
+                    that.students = res.data.data;
+                    that.total = res.data.data.length;
+                    that.getPageStudent();
+                    that.$message.success('修改学生成功');
                     that.closeDialogForm('studentForm');
                 }else{
                     that.$message.error(res.data.msg);
