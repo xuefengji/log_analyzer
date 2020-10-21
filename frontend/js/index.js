@@ -84,9 +84,10 @@ const app = new Vue({
         submitStudentForm(formName) {
             this.$refs[formName].validate((valid) => {
               if (valid) {
-                if(isEdit){
+                if(this.isEdit){
                     this.updateSubmitStudent();
                 }else{
+                    console.log(1);
                     this.addSubmitStudent();
                 }
               } else {
@@ -99,15 +100,20 @@ const app = new Vue({
         addSubmitStudent(){
             let that = this;
             axios.post(that.baseUrl+'student/add/',that.studentForm)
-            .then((res)=>{
-                if(res.code===1){
+            .then(res=>{
+                if(res.data.code === 1){
                     console.log(res.data.data);
                     that.students = res.data.data;
                     that.total = res.data.data.length;
+                    that.getPageStudent();
                     that.$message.success('添加学生成功');
+                    that.closeDialogForm('studentForm');
                 }else{
-                    that.$message.success('添加学生失败');
+                    that.$message.error(res.data.msg);
                 }
+            })
+            .catch(err=>{
+                console.log(err)
             })
         },
         //修改学生信息

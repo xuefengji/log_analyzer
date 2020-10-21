@@ -116,7 +116,7 @@
                                 </el-pagination>
                             </el-col>
                         </el-row>
-                        <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="50%"
+                        <el-dialog :title="dialogTitle" :close-on-click-modal=false :visible.sync="dialogVisible" width="50%"
                             @close="closeDialogForm('studentForm')">
                             <el-form :model="studentForm" ref="studentForm" :rules="rules" :inline="true"
                                 style="margin-left: 10px;" label-width="100px" label-position="right" size="mini">
