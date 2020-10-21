@@ -60,3 +60,23 @@ def add_student(request):
         return JsonResponse({'code': 1, 'data': analyzer})
     except Exception as e:
         return JsonResponse({'code':0,'msg':'添加学生失败，具体原因'+str(e)})
+
+
+#修改学生
+def update_student(request):
+    data = json.loads(request.body.decode('utf-8'))
+    try:
+        #     添加学生信息
+        student_obj = Analyzer.objects.get(sno=data['sno'])
+        student_obj.name = data['name']
+        student_obj.gender = data['gender']
+        student_obj.birthday = data['birthday']
+        student_obj.mobile = data['mobile']
+        student_obj.email = data['email']
+        student_obj.address = data['address']
+        student_obj.save()
+        analyzer_object = Analyzer.objects.all().values()
+        analyzer = list(analyzer_object)
+        return JsonResponse({'code': 1, 'data': analyzer})
+    except Exception as e:
+        return JsonResponse({'code':0,'msg':'修改学生失败，具体原因'+str(e)})
