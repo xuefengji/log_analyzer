@@ -25,4 +25,5 @@ urlpatterns = [
     path('student/add/',views.add_student), #添加学生
     path('student/update/',views.update_student), #更新学生信息
     path('student/delete/',views.delete_student), #删除学生信息
+    path('students/delete/',views.delete_students), #批量删除学生信息
 ]
