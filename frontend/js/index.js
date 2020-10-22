@@ -123,7 +123,7 @@ const app = new Vue({
             axios.post(that.baseUrl+'student/update/',that.studentForm)
             .then(res=>{
                 if(res.data.code === 1){
-                    console.log(res.data.data);
+                    // console.log(res.data.data);
                     that.students = res.data.data;
                     that.total = res.data.data.length;
                     that.getPageStudent();
@@ -136,6 +136,47 @@ const app = new Vue({
             .catch(err=>{
                 console.log(err)
             })
+        },
+        //删除学生信息
+        deleteStudent(row){
+            this.$confirm('是否删除[学号：'+row.sno+',姓名：'+row.name+']，该学生信息?', '提示', {
+                confirmButtonText: '确定删除',
+                cancelButtonText: '取消',
+                type: 'warning'
+              }).then(() => {
+                let that = this;
+                axios.post(that.baseUrl + 'student/delete/',{sno:row.sno})
+                .then(res=>{
+                    if(res.data.code ===1){
+                        //获取所有学生信息
+                        that.students = res.data.data;
+                        //获取数据总数
+                        that.total = res.data.data.length;
+                        //获取分页数据
+                        that.getPageStudent();
+                        that.$message({
+                            type: 'success',
+                            message: '删除成功!'
+                          });
+
+                    }else{
+                        that.$message.error(res.data.msg);
+                    }
+                })
+                .catch(err=>{
+                    this.$message({
+                        type: 'error',
+                        message: '删除学生信息失败'
+                      }); 
+                })
+                
+              }).catch(() => {
+                this.$message({
+                  type: 'info',
+                  message: '已取消删除'
+                });          
+              });
+
         },
         //修改学生信息
         updateStudent(row){
