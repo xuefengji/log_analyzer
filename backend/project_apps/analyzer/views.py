@@ -80,3 +80,18 @@ def update_student(request):
         return JsonResponse({'code': 1, 'data': analyzer})
     except Exception as e:
         return JsonResponse({'code':0,'msg':'修改学生失败，具体原因'+str(e)})
+    
+    
+# 删除学生信息
+def delete_student(request):
+    data = json.loads(request.body.decode('utf-8'))
+    try:
+        #     添加学生信息
+        student_obj = Analyzer.objects.get(sno=data['sno'])
+        # 删除操作
+        student_obj.delete()
+        analyzer_object = Analyzer.objects.all().values()
+        analyzer = list(analyzer_object)
+        return JsonResponse({'code': 1, 'data': analyzer})
+    except Exception as e:
+        return JsonResponse({'code':0,'msg':'删除学生失败，具体原因'+str(e)})
