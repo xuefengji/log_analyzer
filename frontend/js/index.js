@@ -28,13 +28,14 @@ const app = new Vue({
             pageStudent:[], //用于存放当前页数据
             baseUrl: 'http://127.0.0.1:8000/',
             currentPage:1,
-            pageSize:10,
+            pageSize:10, 
             total:0,
             inputstr: "", //获取输入框的值
             dialogVisible: false,
             isView: false,
-            isEdit: false,
+            isEdit: false, //标志是否是编辑
             dialogTitle: "",
+            selectStudents:[], //保存多选数据
             studentForm:{
                 sno: "",
                 name:"",
@@ -81,6 +82,50 @@ const app = new Vue({
     },
    
     methods: {
+        //表格多选学生信息时
+        handleSelectionChange(data){
+            this.selectStudents = data;
+        },
+        //批量删除学生信息
+        deleteStudents(){
+            this.$confirm("是否批量删除"+this.selectStudents.length+"个学生信息嘛？", '提示', {
+                confirmButtonText: '确定删除',
+                cancelButtonText: '取消',
+                type: 'warning'
+              }).then(() => {
+                let that = this;
+                axios.post(that.baseUrl + 'students/delete/',{student:that.selectStudents})
+                .then(res=>{
+                    if(res.data.code ===1){
+                        //获取所有学生信息
+                        that.students = res.data.data;
+                        //获取数据总数
+                        that.total = res.data.data.length;
+                        //获取分页数据
+                        that.getPageStudent();
+                        that.$message({
+                            type: 'success',
+                            message: '批量删除成功!'
+                          });
+
+                    }else{
+                        that.$message.error(res.data.msg);
+                    }
+                })
+                .catch(err=>{
+                    this.$message({
+                        type: 'error',
+                        message: '批量删除学生信息失败'
+                      }); 
+                })
+                
+              }).catch(() => {
+                this.$message({
+                  type: 'info',
+                  message: '已取消删除'
+                });          
+              });
+        },
         //校验表单提交信息(修改、添加)
         submitStudentForm(formName) {
             this.$refs[formName].validate((valid) => {
