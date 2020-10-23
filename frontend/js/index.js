@@ -35,6 +35,7 @@ const app = new Vue({
             isView: false,
             isEdit: false, //标志是否是编辑
             dialogTitle: "",
+            imageUrl:"",//用户头像
             selectStudents:[], //保存多选数据
             studentForm:{
                 sno: "",
@@ -259,6 +260,7 @@ const app = new Vue({
         },
         //添加学生信息
         addStudent(){
+            this.dialogTitle = "添加学生信息";
             this.dialogVisible = true;
             this.isEdit = false;
             this.isView = false;
