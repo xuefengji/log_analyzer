@@ -37,15 +37,15 @@ const app = new Vue({
             dialogTitle: "",
             selectStudents:[], //保存多选数据
             studentForm:{
-                sno: "",
-                name:"",
-                gender: "",
-                birthday: "",
-                mobile: "",
-                email: "",
-                address: "",
-                image: "",
-                imageUrl: "",
+                sno: " ",
+                name:" ",
+                gender: " ",
+                birthday: " ",
+                mobile: " ",
+                email: " ",
+                address: " ",
+                image: " ",
+                imageUrl: " ",
             },
             rules:{
                 sno:[
@@ -84,7 +84,7 @@ const app = new Vue({
    
     methods: {
         //上传图片
-        upload(file){
+        uploadPicturePost(file){
             let that = this;
             //将文件添加到formdata中
             let fileReq = new FormData();
@@ -256,6 +256,7 @@ const app = new Vue({
             this.isEdit = true;
             this.isView = false;
             this.studentForm = JSON.parse(JSON.stringify(row));
+            
 
         },
         //关闭弹窗
@@ -272,6 +273,12 @@ const app = new Vue({
             this.dialogVisible = false;
         },
 
+        //根据学号查询学生信息
+        getStudentInfo(sno){
+            for(oneStudent of this.students){
+                if(oneStudent.sno === sno) return oneStudent.image;
+            }
+        },
         //查看学生信息
         viewStudent(row){
             this.dialogTitle = "查看学生信息";
@@ -282,8 +289,10 @@ const app = new Vue({
             // this.studentForm = row;
             //深拷贝
             this.studentForm = JSON.parse(JSON.stringify(row));
+            this.studentForm.image = this.getStudentInfo(row.sno);
+            this.studentForm.imageUrl = this.baseUrl + 'media/'+ this.studentForm.image;
         },
-        //添加学生信息
+        //添加学生信息弹框
         addStudent(){
             this.dialogTitle = "添加学生信息";
             this.dialogVisible = true;
