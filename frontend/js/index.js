@@ -35,7 +35,6 @@ const app = new Vue({
             isView: false,
             isEdit: false, //标志是否是编辑
             dialogTitle: "",
-            imageUrl:"",//用户头像
             selectStudents:[], //保存多选数据
             studentForm:{
                 sno: "",
@@ -46,6 +45,7 @@ const app = new Vue({
                 email: "",
                 address: "",
                 image: "",
+                imageUrl: "",
             },
             rules:{
                 sno:[
@@ -83,6 +83,31 @@ const app = new Vue({
     },
    
     methods: {
+        //上传图片
+        upload(file){
+            let that = this;
+            //将文件添加到formdata中
+            let fileReq = new FormData();
+            fileReq.append("avatar", file.file);
+            axios({
+                method: 'post',
+                url: that.baseUrl+'upload/',
+                data: fileReq
+            })
+            .then(res=>{
+                if(res.data.code ===1){
+                    that.studentForm.image = res.data.name;
+                    that.studentForm.imageUrl = that.baseUrl + 'media/'+ res.data.name;
+                    
+                }else{
+                    that.$message.error(res.data.msg);
+                }
+            })
+            .catch(err=>{
+                console.log(err)
+                that.$message.error("上传头像出现异常！");
+            })
+        },
         //表格多选学生信息时
         handleSelectionChange(data){
             this.selectStudents = data;
