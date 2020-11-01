@@ -122,7 +122,7 @@
                             width="50%" @close="closeDialogForm('studentForm')">
                             <el-form :model="studentForm" ref="studentForm" :rules="rules" :inline="true"
                                 style="margin-left: 10px;" label-width="100px" label-position="right" size="mini">
-                                <el-upload class="avatar-uploader" :show-file-list="false"
+                                <el-upload class="avatar-uploader" action="#" :auto-upload="false" :show-file-list="false"
                                     :http-request="uploadPicturePost" :disabled="isView"
                                     style="text-align: center;margin:20px;">
                                     <img v-if="studentForm.image" :src="studentForm.imageUrl" class="avatar">

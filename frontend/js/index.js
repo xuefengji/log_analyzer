@@ -270,6 +270,8 @@ const app = new Vue({
             this.studentForm.mobile = "";
             this.studentForm.email = "";
             this.studentForm.address = "";
+            this.studentForm.image = "";
+            this.studentForm.imageUrl = "";
             this.dialogVisible = false;
         },
 
