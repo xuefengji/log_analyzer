@@ -5,7 +5,11 @@ from project_apps.analyzer.models import Analyzer
 from django.http import JsonResponse
 
 import json
+import os
+from django.conf import settings
 
+import uuid
+import hashlib
 #引入Q 查询
 from django.db.models import Q
 
@@ -111,3 +115,35 @@ def delete_students(request):
         return JsonResponse({'code': 1, 'data': analyzer})
     except Exception as e:
         return JsonResponse({'code':0,'msg':'批量删除学生失败，具体原因'+str(e)})
+
+#上传头像
+def avatar_upload(request):
+    #接收上传的文件
+    rev_file = request.FILES.get('avatar')
+    # 判断是否有文件
+    if not rev_file:
+        return JsonResponse({'code':0, 'msg':'上传的图片不存在！'})
+    # 获得唯一名字
+    new_name = get_random_str()
+    # 写入
+    file_path = os.path.join(settings.MEDIA_ROOt, new_name+os.path.splitext(rev_file)[1])
+    try:
+        f = open(file_path, 'wb')
+        for i in rev_file.chunks():
+            f.write(i)
+        f.close()
+        return JsonResponse({'code':1, 'name':new_name+os.path.splitext(rev_file)[1]})
+    except Exception as e:
+        return JsonResponse({'code':0, 'msg':str(e)})
+
+def get_random_str():
+    #获取uuid 随机数
+    uuid_val = uuid.uuid4()
+    #获取uuid随机数字符串
+    uuid_str = str(uuid_val).encode('utf-8')
+    #获取md5实例
+    md5 = hashlib.md5()
+    #拿取uuid的md5摘要
+    md5.update(uuid_str)
+    #返回固定长度的字符串
+    return md5.hexdigest()
