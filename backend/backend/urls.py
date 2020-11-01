@@ -28,7 +28,8 @@ urlpatterns = [
     path('student/update/',views.update_student), #更新学生信息
     path('student/delete/',views.delete_student), #删除学生信息
     path('students/delete/',views.delete_students), #批量删除学生信息
+    path('upload/',views.avatar_upload), #头像上传
 ]
 
 #允许所有的media文件被访问
-urlpatterns += static(settings.MEDIA_URL, document_root =settings.MEDIA_ROOt)
+urlpatterns += static(settings.MEDIA_URL, document_root =settings.MEDIA_ROOT)

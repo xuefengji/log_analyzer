@@ -137,7 +137,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 #设置上传图片路径和外部访问路径
-MEDIA_ROOt = os.path.join(BASE_DIR,'media/')
+MEDIA_ROOT = os.path.join(BASE_DIR,'media/')
 MEDIA_URL = '/media/'
 
 # 添加cors策略
