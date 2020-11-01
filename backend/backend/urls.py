@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from project_apps.analyzer import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,3 +29,6 @@ urlpatterns = [
     path('student/delete/',views.delete_student), #删除学生信息
     path('students/delete/',views.delete_students), #批量删除学生信息
 ]
+
+#允许所有的media文件被访问
+urlpatterns += static(settings.MEDIA_URL, document_root =settings.MEDIA_ROOt)
