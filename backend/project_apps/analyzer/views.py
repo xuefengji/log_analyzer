@@ -7,6 +7,7 @@ from django.http import JsonResponse
 import json
 import os
 from django.conf import settings
+import openpyxl
 
 import uuid
 import hashlib
@@ -152,3 +153,65 @@ def get_random_str():
     md5.update(uuid_str)
     # 返回固定长度的字符串
     return md5.hexdigest()
+
+
+# excel的导入
+def excel_import(request):
+    # 1.获得上传的文件
+    rev_file = request.FILES.get('excel')
+    # 判断是否有文件
+    if not rev_file:
+        return JsonResponse({'code': 0, 'msg': '上传的excel文件不存在！'})
+    # 获得唯一名字
+    new_name = get_random_str()
+    # 写入
+    file_path = os.path.join(settings.MEDIA_ROOT, new_name + os.path.splitext(rev_file.name)[1])
+    try:
+        f = open(file_path, 'wb')
+        for i in rev_file.chunks():
+            f.write(i)
+        f.close()
+        return JsonResponse({'code': 1, })
+    except Exception as e:
+        return JsonResponse({'code': 0, 'msg': str(e)})
+    #2. 打开文件获得数据
+    ex_students = get_excel_data(file_path)
+    # 准备数据
+    success = 0
+    error = 0
+    errors = []
+    #3. 将获得的数据写入数据库
+    for one_student in ex_students:
+        try:
+            obj = Analyzer(sno=one_student['sno'], name=one_student['name'], gender=one_student['gender'],
+                                                      birthday=one_student['birthday'],mobile=one_student['mobile'],
+                                                   email=one_student['email'],address=one_student['address'])
+            obj.save()
+            success += 1
+        except:
+            error +=1
+            errors.append(one_student[sno])
+
+    #4. 获得所有学生的信息
+    stu_obj = Analyzer.objects.all().values()
+    stu_obj = list(stu_obj)
+    return JsonResponse({'code':1, 'success':success,'error':error,'errors':error, 'data':stu_obj})
+
+
+def get_excel_data(path:str):
+    # 获取工作簿
+    workbook = openpyxl.load_workbook(path)
+    # 获取sheet
+    sheet = workbook['student']
+    # 准备数据
+    students = []
+    # 准备key
+    stu_key = ['sno','name','gender','birthday','mobile','email','address']
+    # 获取数据
+    for one_student in sheet.rows:
+        temp = {}
+        # 组合key和value
+        for index,cell in enumerate(one_student):
+            temp[stu_key[index]] = cell.value
+        students.append(temp)
+    return students
