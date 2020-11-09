@@ -171,7 +171,7 @@ def excel_import(request):
         for i in rev_file.chunks():
             f.write(i)
         f.close()
-        return JsonResponse({'code': 1, })
+
     except Exception as e:
         return JsonResponse({'code': 0, 'msg': str(e)})
     #2. 打开文件获得数据
@@ -190,7 +190,7 @@ def excel_import(request):
             success += 1
         except:
             error +=1
-            errors.append(one_student[sno])
+            errors.append(one_student['sno'])
 
     #4. 获得所有学生的信息
     stu_obj = Analyzer.objects.all().values()

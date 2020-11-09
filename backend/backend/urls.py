@@ -29,6 +29,7 @@ urlpatterns = [
     path('student/delete/',views.delete_student), #删除学生信息
     path('students/delete/',views.delete_students), #批量删除学生信息
     path('upload/',views.avatar_upload), #头像上传
+    path('excel_import/',views.excel_import), #头像上传
 ]
 
 #允许所有的media文件被访问
