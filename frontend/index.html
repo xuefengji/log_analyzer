@@ -68,8 +68,8 @@
                                     </el-button-group>
                                 </el-col>
                                 <el-col :span="2">
-                                    <el-upload class="upload-demo">
-                                        <el-button type="primary">导入Excel</el-button>
+                                    <el-upload class="upload-demo" :show-file-list="false" :http-request="uploadExcelPost">
+                                        <el-button type="primary" >导入Excel</el-button>
                                     </el-upload>
                                 </el-col>
                                 <el-col :span="4" style="padding-left: 15px;">
