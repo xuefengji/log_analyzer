@@ -83,6 +83,24 @@ const app = new Vue({
     },
    
     methods: {
+        //导出excel
+        exportToExcel(file){
+            let that = this
+            axios.get(that.baseURL + 'excel/export/')
+            .then(res=>{
+                if(res.data.code ===1){
+                    //拼接excel 的完整URL
+                    let url = that.baseURL + 'media/'+ res.data.name;
+                    //下载
+                    window.open(url);
+                } else {
+                    that.$message.error("导出Excel出现异常！");
+                }
+            })
+            .catch(err=>{
+                console.log(err);
+            });
+        },
         //导入excel
         uploadExcelPost(file) {
             let that = this
@@ -95,7 +113,7 @@ const app = new Vue({
             axios(
                 {
                     method: 'post',
-                    url: that.baseURL + 'excel_import/',
+                    url: that.baseURL + 'excel/import/',
                     data: fileReq
                 }
             ).then(res => {
