@@ -183,7 +183,7 @@ def excel_import(request):
     #3. 将获得的数据写入数据库
     for one_student in ex_students:
         try:
-            obj = Analyzer(sno=one_student['sno'], name=one_student['name'], gender=one_student['gender'],
+            obj = Analyzer.objects.create(sno=one_student['sno'], name=one_student['name'], gender=one_student['gender'],
                                                       birthday=one_student['birthday'],mobile=one_student['mobile'],
                                                    email=one_student['email'],address=one_student['address'])
             obj.save()
@@ -196,6 +196,22 @@ def excel_import(request):
     stu_obj = Analyzer.objects.all().values()
     stu_obj = list(stu_obj)
     return JsonResponse({'code':1, 'success':success,'error':error,'errors':error, 'data':stu_obj})
+
+# excel 的导出
+def excel_export(request):
+    # 获取所有的学生信息
+    obj_students = Analyzer.objects.all().values()
+    # 转为List
+    students = list(obj_students)
+    # 准备名称
+    excel_name = get_random_str() + ".xlsx"
+    # 准备写入的路劲
+    path = os.path.join(settings.MEDIA_ROOT, excel_name)
+    # 写入到Excel
+    write_to_excel(students, path)
+    # 返回
+    return JsonResponse({'code': 1, 'name': excel_name})
+
 
 
 def get_excel_data(path:str):
@@ -215,3 +231,21 @@ def get_excel_data(path:str):
             temp[stu_key[index]] = cell.value
         students.append(temp)
     return students
+
+def write_to_excel(data:list, path:str):
+    """把数据库写入到Excel"""
+    # 实例化一个workbook
+    workbook = openpyxl.Workbook()
+    # 激活一个sheet
+    sheet = workbook.active
+    # 为sheet命名
+    sheet.title = 'student'
+    # 准备keys
+    keys = data[0].keys()
+    # 准备写入数据
+    for index, item in enumerate(data):
+        # 遍历每一个元素
+        for k, v in enumerate(keys):
+            sheet.cell(row=index + 1, column=k + 1, value=str(item[v]))
+    # 写入到文件
+    workbook.save(path)
