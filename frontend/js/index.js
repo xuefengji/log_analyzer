@@ -264,7 +264,7 @@ const app = new Vue({
                     // console.log(res.data.data);
                     that.students = res.data.data;
                     that.total = res.data.data.length;
-                    that.getPageStudent();
+                    that.getStudents();
                     that.$message.success('修改学生成功');
                     that.closeDialogForm('studentForm');
                 }else{
