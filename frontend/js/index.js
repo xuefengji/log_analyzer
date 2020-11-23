@@ -81,7 +81,6 @@ const app = new Vue({
     mounted() {
         this.getStudents()
     },
-   
     methods: {
         //导出excel
         exportToExcel(file){
